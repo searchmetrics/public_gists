@@ -3,7 +3,6 @@ set -e
 BIN_FOLDER=${HOME}/bin
 mkdir -p ${BIN_FOLDER}
 
-
 function install_on_osx()
 {
   curl -sq "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
@@ -14,7 +13,9 @@ function install_on_osx()
     -target CurrentUserHomeDirectory \
     -applyChoiceChangesXML $(pwd)/choices.xml
 
-  echo "Please add '${BIN_FOLDER}/aws-cli' to your path"
+  mkdir -p "${HOME}/.local/bin"
+  ln -s ${BIN_FOLDER}/aws-cli/aws ${HOME}/.local/bin/aws 2>/dev/null|| true
+  echo ${PATH}|grep "${HOME}/.local/bin" >/dev/null || echo -e "\nPlease add '${HOME}/.local/bin' to your \$PATH"
 }
 
 if [ "${OSTYPE%%[0-9\.]*}" = "darwin" ]

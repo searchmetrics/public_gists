@@ -2,6 +2,7 @@
 set -e
 BIN_FOLDER=${HOME}/bin
 mkdir -p ${BIN_FOLDER}
+source <(curl -s https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/.shared_shell_functions)
 
 function install_on_osx()
 {
@@ -18,9 +19,21 @@ function install_on_osx()
   echo ${PATH}|grep "${HOME}/.local/bin" >/dev/null || echo -e "\nPlease add '${HOME}/.local/bin' to your \$PATH"
 }
 
+function install_on_linux()
+{
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  enter_sudo
+  sudo ./aws/install
+  exit_sudo
+}
+
 if [ "${OSTYPE%%[0-9\.]*}" = "darwin" ]
 then
   install_on_osx
+elif [ "${OSTYPE}" = "linux-gnu" ]
+then
+  install_on_linux
 fi
 
 ## silently try to remove bin folder - will only succeed if still empty

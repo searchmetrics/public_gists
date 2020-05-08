@@ -2,7 +2,10 @@
 set -e
 BIN_FOLDER=${HOME}/bin
 mkdir -p ${BIN_FOLDER}
-source <(curl -s https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/.shared_shell_functions)
+
+curl -s https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/.shared_shell_functions \
+     -o .shared_shell_functions
+source .shared_shell_functions
 
 function install_on_osx()
 {
@@ -28,10 +31,11 @@ function install_on_linux()
   exit_sudo
 }
 
-if [ "${OSTYPE%%[0-9\.]*}" = "darwin" ]
+OS=${OSTYPE%%[0-9\.]*}
+if [ "${OS}" = "darwin" ]
 then
   install_on_osx
-elif [ "${OSTYPE}" = "linux-gnu" ]
+elif [ "${OS}" = "linux-gnu" ]
 then
   install_on_linux
 fi

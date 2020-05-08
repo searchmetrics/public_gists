@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-
-source <(curl -s https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/.shared_shell_functions)
+curl -s https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/.shared_shell_functions \
+     -o .shared_shell_functions
+source .shared_shell_functions
 
 function install_on_osx()
 {
@@ -24,7 +25,7 @@ OS=${OSTYPE%%[0-9\.]*}
 if [ "${OS}" = "darwin" ]
 then
   install_on_osx
-elif [ "${OSTYPE}" = "linux-gnu" ]
+elif [ "${OS}" = "linux-gnu" ]
 then
   install_on_linux
 fi

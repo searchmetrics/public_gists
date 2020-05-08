@@ -39,7 +39,8 @@ then
 fi
 if [ "$(head -c 2 install.sh)" = "#!" ]
 then
-  cat install.sh | bash -s
+  chmod +x install.sh
+  ./install.sh 
 else
   echo "No valid installer for ${1} found."
 fi

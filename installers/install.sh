@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # exit if the param is not given
+
 USAGE="Please provide the name of the tool to install as argument.
 
 Available tools are:
@@ -42,4 +43,3 @@ then
 else
   echo "No valid installer for ${1} found."
 fi
-

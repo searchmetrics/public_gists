@@ -5,7 +5,7 @@ function enter_sudo()
     sudo_active=$(sudo -n true >/dev/null 2>&1; echo $?)
     if [[ ${EUID} -ne 0 ]] && [[ ${sudo_active} -ne 0 ]]; then
         echo "The install-script needs root privileges."
-        passw=$(bash -c 'read -rsp "Please enter your password for sudo (will not be shown): " passw; echo ${passw}')
+        passw=$(bash -c 'read -rsp "Please enter your password for sudo (will not be shown): " passw < /dev/tty; echo ${passw}')
         
         sudo_successful=$(sudo -S -v >/dev/null 2>&1 <<<"${passw}"; echo $?)
         if [[ ${sudo_successful} -ne 0 ]]; then

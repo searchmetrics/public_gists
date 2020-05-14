@@ -7,8 +7,9 @@ source .shared_shell_functions
 function install_on_osx()
 {
   enter_sudo
-  sudo curl -o /Library/LaunchDaemons/com.searchmetrics.docker_loopback_alias.plist \
-    https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/loopback_alias/com.searchmetrics.docker_loopback_alias.plist
+  sudo curl -sq https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/loopback_alias/com.searchmetrics.docker_loopback_alias.plist \
+            -o /Library/LaunchDaemons/com.searchmetrics.docker_loopback_alias.plist
+  echo ""
   sudo launchctl load /Library/LaunchDaemons/com.searchmetrics.docker_loopback_alias.plist
   exit_sudo
 }

@@ -5,9 +5,9 @@
 USAGE="Please provide the name of the tool to install as argument.
 
 Available tools are:
- - azure_azure_login  installs the azure_login docker wrapper
+ - aws_azure_login  installs the azure_login docker wrapper
  - aws_cli            installs the AWS CLI for current user to
-                       '${HOME}/bin/aws-cli'
+                       '${HOME}/.local/bin/aws-cli'
  - loopback_alias     adds the IP address 10.254.254.254 as an alias to
                       the local network interface to provide a common IP address
                       for docker containers to reach the host

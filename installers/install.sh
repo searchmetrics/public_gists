@@ -5,6 +5,7 @@
 USAGE="Please provide the name of the tool to install as argument.
 
 Available tools are:
+ - azure_azure_login  installs the azure_login docker wrapper
  - aws_cli            installs the AWS CLI for current user to
                        '${HOME}/bin/aws-cli'
  - loopback_alias     adds the IP address 10.254.254.254 as an alias to
@@ -40,7 +41,7 @@ fi
 if [ "$(head -c 2 install.sh)" = "#!" ]
 then
   chmod +x install.sh
-  ./install.sh 
+  ./install.sh
 else
   echo "No valid installer for ${1} found."
 fi

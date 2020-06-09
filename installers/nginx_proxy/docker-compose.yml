@@ -1,0 +1,51 @@
+## Compilation of docker container definitions useful for local development and deployment
+version: "3.5"
+
+services:
+  nginx:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    environment:
+      DEFAULT_HOST: portainer.docker
+    networks:
+      - nginx_proxy
+      - default
+    restart: always
+
+  dnsmasq:
+    build:
+      context: dnsmasq
+      dockerfile: Dockerfile
+    ports:
+      - "53:53/udp"
+    environment:
+      ## you can reach dnsmasq management on http://dns.docker
+      VIRTUAL_HOST: dns.docker
+      VIRTUAL_PORT: 8080
+      HTTP_PASS:
+      HTTP_USER:
+    depends_on:
+      - nginx
+    restart: always
+
+  portainer:
+    build:
+      context: portainer
+    volumes:
+      - ~/.local/portainer/storage/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: --admin-password-file /tmp/admin_password -H unix:///var/run/docker.sock
+    environment:
+      ## you can reach docker management on http://admin:adminadmin@portainer.docker
+      VIRTUAL_HOST: portainer.docker
+    restart: always
+    depends_on:
+      - nginx
+
+networks:
+  nginx_proxy:
+    name: nginx_proxy

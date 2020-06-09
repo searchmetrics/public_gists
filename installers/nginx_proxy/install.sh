@@ -2,8 +2,6 @@
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 INSTALLERS_DIR=${SCRIPT_DIR}/..
 
-ls -hal $SCRIPT_DIR
-ls -hal $INSTALLERS_DIR
 source ${INSTALLERS_DIR}/.shared_shell_functions
 
 function install_resolver() {

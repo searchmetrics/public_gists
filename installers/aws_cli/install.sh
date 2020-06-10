@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 BIN_FOLDER=${HOME}/bin
-mkdir -p ${BIN_FOLDER}
+mkdir -p "${BIN_FOLDER}"
 
 curl -s https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/.shared_shell_functions \
      -o .shared_shell_functions
@@ -18,8 +18,8 @@ function install_on_osx()
     -applyChoiceChangesXML $(pwd)/choices.xml
 
   mkdir -p "${HOME}/.local/bin"
-  ln -s ${BIN_FOLDER}/aws-cli/aws ${HOME}/.local/bin/aws 2>/dev/null|| true
-  echo ${PATH}|grep "${HOME}/.local/bin" >/dev/null || echo -e "\nPlease add '${HOME}/.local/bin' to your \$PATH"
+  ln -s "${BIN_FOLDER}"/aws-cli/aws "${HOME}"/.local/bin/aws 2>/dev/null|| true
+  echo "${PATH}"|grep "${HOME}/.local/bin" >/dev/null || echo -e "\nPlease add '${HOME}/.local/bin' to your \$PATH"
 }
 
 function install_on_linux()
@@ -41,5 +41,5 @@ then
 fi
 
 ## silently try to remove bin folder - will only succeed if still empty
-rmdir ${BIN_FOLDER} 2> /dev/null || true
+rmdir "${BIN_FOLDER}" 2> /dev/null || true
 

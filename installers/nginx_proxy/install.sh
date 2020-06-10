@@ -2,7 +2,8 @@
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 INSTALLERS_DIR=${SCRIPT_DIR}/..
 
-source ${INSTALLERS_DIR}/.shared_shell_functions
+# shellcheck source=../.shared_shell_functions
+source "${INSTALLERS_DIR}"/.shared_shell_functions
 
 function install_resolver() {
   if [[ -f /etc/resolver/docker ]]; then
@@ -14,7 +15,10 @@ function install_resolver() {
     fi
     echo setting local dnsmasq as resolver for domain ".docker" to resolve to 127.0.0.1
     ## place resolver
-    cat ${SCRIPT_DIR}/dnsmasq/dnsmasq.resolver.docker | sudo tee /etc/resolver/docker > /dev/null
+    # shellcheck disable=SC2024
+    sudo tee /etc/resolver/docker \
+      < "${SCRIPT_DIR}"/dnsmasq/dnsmasq.resolver.docker \
+      > /dev/null
     exit_sudo
   fi
 }

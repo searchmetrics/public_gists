@@ -29,17 +29,17 @@ trap "exit 1"                      HUP INT PIPE QUIT TERM
 trap 'rm -rf "${INSTALL_TMP_DIR}"' EXIT
 
 ## check if tool is available locally (e.g. from checked out project)
-if [ -d ${1} ]
+if [ -d "${1}" ]
 then
-  mkdir -p ${INSTALL_TMP_DIR}/public_gists-master/installers || exit
+  mkdir -p "${INSTALL_TMP_DIR}"/public_gists-master/installers || exit
   (# also copy hidden files
   shopt -s dotglob
-  cp -r * ${INSTALL_TMP_DIR}/public_gists-master/installers/
+  cp -r ./* "${INSTALL_TMP_DIR}"/public_gists-master/installers/
   )
-  cd ${INSTALL_TMP_DIR} || exit
+  cd "${INSTALL_TMP_DIR}" || exit
 else
   ## or download archive
-  cd ${INSTALL_TMP_DIR} || exit
+  cd "${INSTALL_TMP_DIR}" || exit
 
   ## download complete archive
   curl -Ls https://github.com/searchmetrics/public_gists/archive/master.zip \
@@ -47,7 +47,7 @@ else
 fi
 
 ## go to selected tool's install folder
-cd public_gists-master/installers/${1} ||exit
+cd public_gists-master/installers/"${1}" ||exit
 
 # execute requested script
 if [ "$(head -c 2 install.sh)" = "#!" ]

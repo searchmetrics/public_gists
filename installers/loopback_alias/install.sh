@@ -16,9 +16,9 @@ function install_on_osx()
 
 function install_on_linx()
 {
-  main_interface=`ip addr show | awk '/inet.*brd/{print $NF; exit}'`
+  main_interface=$(ip addr show | awk '/inet.*brd/{print $NF; exit}')
   enter_sudo
-  sudo ip addr add 10.254.254.254/24 brd + dev $main_interface label $main_interface:1  
+  sudo ip addr add 10.254.254.254/24 brd + dev "${main_interface}" label "${main_interface}":1
   exit_sudo
 }
 

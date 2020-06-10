@@ -1,37 +1,37 @@
 #!/usr/bin/env bash
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+INSTALLERS_DIR=${SCRIPT_DIR}/..
 
+# shellcheck source=../.shared_shell_functions
+source "${INSTALLERS_DIR}"/.shared_shell_functions
 
-function install_on_osx()
-{
+set -e
+
+function _download_script() {
+  curl -s https://raw.githubusercontent.com/searchmetrics/aws-azure-login/master/docker-launch.sh \
+    - o aws-azure-login
+  chmod +x aws-azure-login
+  ls aws-azure-login 2>/dev/null
+}
+
+function install_on_osx() {
   BIN_FOLDER=${HOME}/.local/bin
   mkdir -p "${BIN_FOLDER}"
-  curl -o "${BIN_FOLDER}"/aws-azure-login https://raw.githubusercontent.com/searchmetrics/aws-azure-login/master/docker-launch.sh
-  chmod +x "${BIN_FOLDER}"/aws-azure-login
-  echo "${PATH}"|grep "${HOME}/.local/bin" >/dev/null || echo -e "\nPlease add '${HOME}/.local/bin' to your \$PATH"
-  mkdir -p "${HOME}"/.aws
+  mv "$(_download_script)" "${BIN_FOLDER}"/aws-azure-login
+  echo "${PATH}" | grep "${HOME}/.local/bin" >/dev/null || echo -e "\nPlease add '${HOME}/.local/bin' to your \$PATH"
 }
 
-function install_on_linux()
-{
-  curl -s https://raw.githubusercontent.com/searchmetrics/public_gists/master/installers/.shared_shell_functions \
-     -o .shared_shell_functions
-  source .shared_shell_functions
-
+function install_on_linux() {
   BIN_FOLDER=/usr/local/bin
-
   enter_sudo
-  sudo curl -s https://raw.githubusercontent.com/searchmetrics/aws-azure-login/master/docker-launch.sh \
-    -o ${BIN_FOLDER}/aws-azure-login
-  sudo chmod +x ${BIN_FOLDER}/aws-azure-login
+  sudo mv "$(_download_script)" "${BIN_FOLDER}"/aws-azure-login
   exit_sudo
+}
+
+function _install_aws_azure_login() {
+  _install_os_based
+
   mkdir -p "${HOME}"/.aws
 }
 
-OS=${OSTYPE%%[0-9\.]*}
-if [ "${OS}" = "darwin" ]
-then
-  install_on_osx
-elif [ "${OS}" = "linux-gnu" ]
-then
-  install_on_linux
-fi
+_install_aws_azure_login

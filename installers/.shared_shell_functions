@@ -1,7 +1,6 @@
 declare -t sudo_successful=${sudo_successful:+1}
 
-function enter_sudo()
-{
+function enter_sudo() {
     sudo_active=$(sudo -n true >/dev/null 2>&1; echo $?)
     if [[ ${EUID} -ne 0 ]] && [[ ${sudo_active} -ne 0 ]]; then
         echo "The install-script needs root privileges."
@@ -16,8 +15,7 @@ function enter_sudo()
     fi
 }
 
-function exit_sudo()
- {
+function exit_sudo() {
   if [[ ${sudo_successful} -eq 0 ]];
     then echo 'exiting sudo for you'
     sudo -k
@@ -25,3 +23,19 @@ function exit_sudo()
   sudo_successful=1
 }
 
+function install_on_osx() {
+  echo "please implement function 'install_on_osx' in your installer"
+}
+
+function install_on_linux() {
+  echo "please implement function 'install_on_osx' in your installer"
+}
+
+function _install_os_based() {
+  OS=${OSTYPE%%[0-9\.]*}
+  if [ "${OS}" = "darwin" ]; then
+    install_on_osx
+  elif [ "${OS}" = "linux-gnu" ]; then
+    install_on_linux
+  fi
+}

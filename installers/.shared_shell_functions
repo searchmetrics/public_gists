@@ -1,4 +1,4 @@
-declare -t sudo_successful=1
+declare -t sudo_successful=${sudo_successful:+1}
 
 function enter_sudo()
 {
@@ -6,12 +6,13 @@ function enter_sudo()
     if [[ ${EUID} -ne 0 ]] && [[ ${sudo_active} -ne 0 ]]; then
         echo "The install-script needs root privileges."
         passw=$(bash -c 'read -rsp "Please enter your password for sudo (will not be shown): " passw < /dev/tty; echo ${passw}')
-        
+
         sudo_successful=$(sudo -S -v >/dev/null 2>&1 <<<"${passw}"; echo $?)
         if [[ ${sudo_successful} -ne 0 ]]; then
             echo "Command 'sudo' was not successful - exiting."
             exit 1
         fi
+        echo
     fi
 }
 

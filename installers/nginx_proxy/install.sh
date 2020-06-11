@@ -24,7 +24,7 @@ function install_dockerdomain_resolver() {
 }
 
 function install_docker_nginx_proxy() {
-  docker-compose build --pull
+  docker-compose build --pull --no-cache
   docker-compose up -d
   echo nginx-proxy successfully installed.
   echo now add VIRTUAL_HOST=yourservice.docker to you dockerized services

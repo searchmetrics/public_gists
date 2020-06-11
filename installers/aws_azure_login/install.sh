@@ -9,7 +9,7 @@ set -e
 
 function _download_script() {
   curl -s https://raw.githubusercontent.com/searchmetrics/aws-azure-login/master/docker-launch.sh \
-    - o aws-azure-login
+    -o aws-azure-login
   chmod +x aws-azure-login
   ls aws-azure-login 2>/dev/null
 }

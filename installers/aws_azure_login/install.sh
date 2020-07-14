@@ -31,6 +31,10 @@ function install_on_linux() {
 function _install_aws_azure_login() {
   _install_os_based
 
+  if [[ -d "${HOME}"/.aws ]]; then
+    mv "${HOME}"/.aws "${HOME}"/.aws.backup
+    echo "There was a AWS config folder already existing. Moving to '"${HOME}"/.aws.backup'."
+  fi
   mkdir -p "${HOME}"/.aws
 }
 
